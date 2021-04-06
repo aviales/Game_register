@@ -1,0 +1,39 @@
+<p id="notice"><%= notice %></p>
+
+<div class="text-center text-info">
+  <h1>Games</h1>
+</div>
+<table>
+  <thead>
+    <tr>
+      <th scope="col">Name</th>
+      <th scope="col">Rule text</th>
+      <th scope="col">Details</th>
+      <th scope="col">Edit</th>
+      <th scope="col">Game Image</th>
+      <th scope="col">Rules pdf</th>
+      <th colspan="3"></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @games.each do |game| %>
+      <tr>
+        <td><%= game.name %></td>
+        <td><%= game.rule_text %></td>
+        <td><%= link_to 'Show', game %></td>
+        <td><%= link_to 'Edit', edit_game_path(game) %></td>
+        <% if game.box_image.attached? %>
+          <td><%= image_tag game.box_image.variant(monochrome: true, resize: "100x100").processed %></td> 
+        <% end %>
+        <td><%= link_to("Download here", rails_blob_path(game.rules_pdf), disposition: 'attachment') %></td>
+        <td><%= link_to 'Destroy', game, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+<div class="text-center">
+  <%= link_to 'New Game', new_game_path %>
+</div>
